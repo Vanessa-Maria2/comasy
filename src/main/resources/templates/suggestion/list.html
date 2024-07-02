@@ -4,18 +4,48 @@
     <meta charset="UTF-8">
     <title>Listagem de Sugestões</title>
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.5.0/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <style>
+        .icon {
+            position: absolute;
+            left: -40px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: white;
+            border-radius: 50%;
+            padding: 5px;
+            font-size: 32px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .icon-1 {
+            color: gold;
+        }
+
+        .icon-2 {
+            color: silver;
+        }
+
+        .icon-3 {
+            color: #cd7f32;
+        }
+
+        .icon-container {
+            position: relative;
+            padding-left: 40px;
+        }
+    </style>
 </head>
 <body>
 <div th:insert="~{../static/fragments/nav-bar :: nav}"></div>
 <div class="container mt-5">
     <div id="alertContainer"></div>
     <div class="card">
-        <h2 class="card-header">Listagem de Sugestões</h2>
+        <h2 class="card-header">Vote na melhor Sugestão!</h2>
         <div class="card-body">
             <table class="table">
                 <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Tipo</th>
                     <th>Mensagem</th>
                     <th>Data da Proposta</th>
@@ -24,9 +54,14 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="suggestion : ${suggestions}">
-                    <td th:text="${suggestion.id}"></td>
-                    <td th:text="${suggestion.type}"></td>
+                <tr th:each="suggestion, iterStat : ${suggestions}">
+                    <td class="icon-container">
+                        <i th:if="${isCondominium and iterStat.index < 3}" class="material-icons icon"
+                           th:classappend="${iterStat.index == 0 ? 'icon-1' : (iterStat.index == 1 ? 'icon-2' : 'icon-3')}">
+                            workspace_premium
+                        </i>
+                        <span th:text="${suggestion.type}"></span>
+                    </td>
                     <td th:text="${suggestion.message}"></td>
                     <td th:text="${#dates.format(suggestion.dataProposta, 'dd/MM/yyyy')}"></td>
                     <td th:text="${suggestion.qtdVotos}"></td>

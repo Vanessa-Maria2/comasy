@@ -11,7 +11,6 @@ public class RankedSuggestionStrategy implements SuggestionStrategy {
     public List<Suggestion> getSuggestions(List<Suggestion> suggestions) {
         return suggestions.stream()
                 .sorted(Comparator.comparing(Suggestion::getQtdVotos).reversed())
-//                .limit(3)
                 .collect(Collectors.toList());
     }
 }
