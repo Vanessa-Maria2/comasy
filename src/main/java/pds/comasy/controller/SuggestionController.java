@@ -49,6 +49,7 @@ public class SuggestionController {
         model.setViewName("suggestion/list");
         model.addObject("suggestions", suggestions);
         model.addObject("isCondominium", entityType.equals("condominium"));
+        model.addObject("isHostel", entityType.equals("hostel"));
         return model;
     }
 

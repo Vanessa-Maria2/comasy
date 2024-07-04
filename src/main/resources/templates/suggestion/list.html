@@ -5,36 +5,7 @@
     <title>Listagem de Sugestões</title>
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.5.0/css/bootstrap.min.css}"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <style>
-        .icon {
-            position: absolute;
-            left: -40px;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: white;
-            border-radius: 50%;
-            padding: 5px;
-            font-size: 32px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-        }
-
-        .icon-1 {
-            color: gold;
-        }
-
-        .icon-2 {
-            color: silver;
-        }
-
-        .icon-3 {
-            color: #cd7f32;
-        }
-
-        .icon-container {
-            position: relative;
-            padding-left: 40px;
-        }
-    </style>
+    <link th:rel="stylesheet" th:href="@{/css/suggestion-list.css}"/>
 </head>
 <body>
 <div th:insert="~{../static/fragments/nav-bar :: nav}"></div>
@@ -43,6 +14,13 @@
     <div class="card">
         <h2 class="card-header">Vote na melhor Sugestão!</h2>
         <div class="card-body">
+            <div th:if="${isHostel}" class="mb-3">
+                <button class="btn btn-primary filter-btn" data-filter="all">Todos</button>
+                <button class="btn btn-infraestrutura filter-btn" data-filter="infraestrutura">Infraestrutura</button>
+                <button class="btn btn-servico filter-btn" data-filter="servico">Serviço</button>
+                <button class="btn btn-sugestao filter-btn" data-filter="sugestao">Sugestão</button>
+                <button class="btn btn-outro filter-btn" data-filter="outro">Outro</button>
+            </div>
             <table class="table">
                 <thead>
                 <tr>
@@ -54,7 +32,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="suggestion, iterStat : ${suggestions}">
+                <tr th:each="suggestion, iterStat : ${suggestions}" th:class="${isHostel ? 'suggestion-row' : ''}">
                     <td class="icon-container">
                         <i th:if="${isCondominium and iterStat.index < 3}" class="material-icons icon"
                            th:classappend="${iterStat.index == 0 ? 'icon-1' : (iterStat.index == 1 ? 'icon-2' : 'icon-3')}">
@@ -66,7 +44,8 @@
                     <td th:text="${#dates.format(suggestion.dataProposta, 'dd/MM/yyyy')}"></td>
                     <td th:text="${suggestion.qtdVotos}"></td>
                     <td>
-                        <form sec:authorize="hasRole('ADMIN')" id="deleteForm" th:action="@{'/suggestion/' + ${suggestion.id}}" method="post">
+                        <form sec:authorize="hasRole('ADMIN')" id="deleteForm"
+                              th:action="@{'/suggestion/' + ${suggestion.id}}" method="post">
                             <button type="submit" class="btn btn-danger delete-btn">Excluir</button>
                         </form>
                         <form id="voteForm" th:action="@{'/suggestion/' + ${suggestion.id} + '/vote'}" method="post">
@@ -137,6 +116,56 @@
                     showAlert(errorMessage, 'danger');
                 }
             });
+        });
+    });
+
+    // Função para remover acentos
+    function removeAccents(str) {
+        return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    }
+
+    // Função para converter para minúsculo e remover acentos
+    function transformType(type) {
+        return removeAccents(type.toLowerCase());
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Selecione todas as linhas da tabela com a classe 'suggestion-row'
+        const rows = document.querySelectorAll('.suggestion-row');
+
+        rows.forEach(row => {
+            // Encontre o tipo de sugestão dentro da linha
+            const typeElement = row.querySelector('td span');
+            if (typeElement) {
+                const originalType = typeElement.innerText;
+                const transformedType = transformType(originalType);
+
+                // Adicione a classe transformada à linha
+                row.classList.add('border-hostel-type-' + transformedType);
+            }
+        });
+    });
+
+    function filterRows(category) {
+        const rows = document.querySelectorAll('.suggestion-row');
+        rows.forEach(row => {
+            const typeElement = row.querySelector('td span');
+            if (typeElement) {
+                const type = transformType(typeElement.innerText);
+                if (category === 'all' || type === category) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            }
+        });
+    }
+
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const category = this.getAttribute('data-filter');
+            filterRows(category);
         });
     });
 </script>

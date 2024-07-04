@@ -1,0 +1,92 @@
+.icon {
+    position: absolute;
+    left: -40px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: white;
+    border-radius: 50%;
+    padding: 5px;
+    font-size: 32px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.icon-1 {
+    color: gold;
+}
+
+.icon-2 {
+    color: silver;
+}
+
+.icon-3 {
+    color: #cd7f32;
+}
+
+.icon-container {
+    position: relative;
+    padding-left: 40px;
+}
+
+.border-hostel-type-infraestrutura {
+    border-left: 5px solid indianred;
+}
+
+.border-hostel-type-servico {
+    border-left: 5px solid indigo;
+}
+
+.border-hostel-type-sugestao {
+    border-left: 5px solid olivedrab;
+}
+
+.border-hostel-type-outro {
+    border-left: 5px solid darkslategrey;
+}
+
+.btn {
+    color: white;
+}
+
+.btn:hover {
+    color: white;
+}
+
+.btn-infraestrutura {
+    background-color: indianred;
+    border-color: indianred;
+}
+
+.btn-infraestrutura:hover {
+    background-color: #a34747;
+    border-color: #a34747;
+}
+
+.btn-servico {
+    background-color: indigo;
+    border-color: indigo;
+}
+
+.btn-servico:hover {
+    background-color: #3e006a;
+    border-color: #3e006a;
+}
+
+.btn-sugestao {
+    background-color: olivedrab;
+    border-color: olivedrab;
+}
+
+.btn-sugestao:hover {
+    background-color: #546e1b;
+    border-color: #546e1b;
+}
+
+.btn-outro {
+    background-color: darkslategrey;
+    border-color: darkslategrey;
+}
+
+.btn-outro:hover {
+    background-color: #274242;
+    border-color: #274242;
+}
