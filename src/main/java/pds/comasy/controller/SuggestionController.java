@@ -1,7 +1,7 @@
 package pds.comasy.controller;
 
-import com.opencsv.exceptions.CsvException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,8 +12,6 @@ import pds.comasy.exceptions.FailedToDeleteException;
 import pds.comasy.exceptions.NotFoundException;
 import pds.comasy.service.SuggestionService;
 
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +22,9 @@ public class SuggestionController {
 
     @Autowired
     private SuggestionService suggestionService;
+
+    @Value("${systemType}")
+    private String systemType;
 
     @PostMapping
     public ResponseEntity<?> createSuggestion(@RequestBody Suggestion suggestion) {
@@ -43,13 +44,14 @@ public class SuggestionController {
     }
 
     @GetMapping("/list")
-    public ModelAndView getSuggestions(@RequestParam String entityType) {
-        List<Suggestion> suggestions = suggestionService.getSuggestions(entityType);
+    public ModelAndView getSuggestions() {
+        List<Suggestion> suggestions = suggestionService.getSuggestions();
         ModelAndView model = new ModelAndView();
         model.setViewName("suggestion/list");
         model.addObject("suggestions", suggestions);
-        model.addObject("isCondominium", entityType.equals("condominium"));
-        model.addObject("isHostel", entityType.equals("hostel"));
+        model.addObject("isCondominium", "condominium".equals(systemType));
+        model.addObject("isHostel", "hostel".equals(systemType));
+        model.addObject("isRepublic", "republic".equals(systemType));
         return model;
     }
 
