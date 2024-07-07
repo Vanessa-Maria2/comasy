@@ -77,12 +77,12 @@ public class SuggestionService {
                 Resident resident = residentRepository.findById(residentId).orElse(null);
 
                 Suggestion existingSuggestion = suggestionRepository.findByTypeAndMessageAndDataPropostaAndResident(
-                        "Sugestão", mensagem, dataProposta
+                        getTypeFromMessage(mensagem), mensagem, dataProposta
                 );
 
                 if (existingSuggestion == null) {
                     Suggestion suggestion = new Suggestion();
-                    suggestion.setType("Sugestão");
+                    suggestion.setType(getTypeFromMessage(mensagem));
                     suggestion.setMessage(truncate(mensagem));
                     suggestion.setQtdVotos(0);
                     suggestion.setDataProposta(dataProposta);
@@ -97,6 +97,20 @@ public class SuggestionService {
         } catch (Exception e) {
             e.printStackTrace();
             throw new EntitySaveFailureException("Failed to process CSV");
+        }
+    }
+
+    private String getTypeFromMessage(String message) {
+        if (message.startsWith("#I")) {
+            return "Infraestrutura";
+        } else if (message.startsWith("#O")) {
+            return "Outros";
+        } else if (message.startsWith("#S")) {
+            return "Serviço";
+        } else if (message.startsWith("#G")) {
+            return "Geral";
+        } else {
+            return "Sugestão";
         }
     }
 

@@ -35,11 +35,11 @@
     border-left: 5px solid indigo;
 }
 
-.border-hostel-type-sugestao {
+.border-hostel-type-geral {
     border-left: 5px solid olivedrab;
 }
 
-.border-hostel-type-outro {
+.border-hostel-type-outros {
     border-left: 5px solid darkslategrey;
 }
 
@@ -71,12 +71,12 @@
     border-color: #3e006a;
 }
 
-.btn-sugestao {
+.btn-geral {
     background-color: olivedrab;
     border-color: olivedrab;
 }
 
-.btn-sugestao:hover {
+.btn-geral:hover {
     background-color: #546e1b;
     border-color: #546e1b;
 }

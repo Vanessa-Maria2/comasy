@@ -18,4 +18,5 @@ body {
 
 .container {
     margin: 5% 5% 5% 20%;
+    max-width: 100%;
 }
