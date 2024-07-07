@@ -5,7 +5,13 @@
     <title>Listagem de Sugestões</title>
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.5.0/css/bootstrap.min.css}"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/constants.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/sidebar.css}"/>
     <link th:rel="stylesheet" th:href="@{/css/suggestion-list.css}"/>
+
+    <!-- Inclui a folha de estilo correta com base no systemType -->
+    <link rel="stylesheet" type="text/css"
+          th:href="@{${#strings.concat('/css/', @environment.getProperty('systemType'), '-palette.css')}}" />
 </head>
 <body>
 <div th:insert="~{../static/fragments/nav-bar :: nav}"></div>

@@ -10,29 +10,27 @@
 
     <!-- Inclui a folha de estilo correta com base no systemType -->
     <link rel="stylesheet" type="text/css"
-          th:href="${systemType == 'condominium' ? '/css/condominium-palette.css' :
-                   (systemType == 'hostel' ? '/css/hostel-palette.css' : '/css/republic-palette.css')}"/>
+          th:href="@{${#strings.concat('/css/', @environment.getProperty('systemType'), '-palette.css')}}" />
 </head>
 <body>
-<div class="container">
+<div class="container" style="margin: 5%;">
     <div class="logo">
         <img th:src="@{/img/logo-building.svg}" alt="Logo">
-        <h3 class="title" th:text="${systemType == 'condominium' ? 'Condominium Manager' :
-                                   (systemType == 'hostel' ? 'Hostel Manager' :
-                                   (systemType == 'republic' ? 'Republic Manager' : 'Default Manager'))}"></h3>
+        <h3 class="title" th:text="${systemType == 'condominium' ? 'Gerenciador de Condomínio' :
+                                   (systemType == 'hostel' ? 'Gerenciador de Hostel' : 'Gerenciador de República')}"></h3>
     </div>
     <div class="login-form">
         <div id="alertContainer"></div>
         <form id="loginForm">
             <div class="form-group">
-                <label for="username">Username:</label>
+                <label for="username">Usuário:</label>
                 <input type="text" class="form-control" id="username" name="username">
             </div>
             <div class="form-group">
-                <label for="password">Password:</label>
+                <label for="password">Senha:</label>
                 <input type="password" class="form-control" id="password" name="password">
             </div>
-            <button type="button" class="btn btn-primary btn-block" id="loginButton">Login</button>
+            <button type="button" class="btn btn-primary btn-block" id="loginButton">Entrar</button>
         </form>
     </div>
 </div>
