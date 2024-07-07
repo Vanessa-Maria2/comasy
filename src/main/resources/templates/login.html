@@ -13,7 +13,7 @@
           th:href="@{${#strings.concat('/css/', @environment.getProperty('systemType'), '-palette.css')}}" />
 </head>
 <body>
-<div class="container" style="margin: 5%;">
+<div class="container" style="margin: 5%;max-width: 60%;">
     <div class="logo">
         <img th:src="@{/img/logo-building.svg}" alt="Logo">
         <h3 class="title" th:text="${systemType == 'condominium' ? 'Gerenciador de Condomínio' :
