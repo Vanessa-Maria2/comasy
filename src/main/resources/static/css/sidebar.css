@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
+body {
+    display: flex;
+}
+
+.sidebar {
+    width: 15%;
+    background-color: var(--dark-color);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100vh;
+    position: fixed;
+    padding: 2%;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: white;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+.sidebar a:hover {
+    background-color: var(--highlight-color);
+    color: black;
+}
+
+.sidebar .material-icons {
+    margin-right: 10px;
+}
+
+.content {
+    margin-left: 250px;
+    padding: 20px;
+    width: 100%;
+}

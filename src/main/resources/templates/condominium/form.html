@@ -5,6 +5,12 @@
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.5.0/css/bootstrap.min.css}"/>
     <script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/constants.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/sidebar.css}"/>
+
+    <!-- Inclui a folha de estilo correta com base no systemType -->
+    <link rel="stylesheet" type="text/css"
+          th:href="@{${#strings.concat('/css/', @environment.getProperty('systemType'), '-palette.css')}}" />
     <title>Cadastro de Condomínio</title>
 </head>
 <body>

@@ -1,0 +1,64 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--background-color);
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--dark-color);
+    border-radius: 12px;
+    padding: 10% 5%;
+    color: white;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.login-form {
+    width: 40%;
+    background-color: var(--medium-color);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-right: 5%;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.btn {
+    border: none;
+    background-color: var(--highlight-color);
+    font-weight: 700;
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
+    text-align: center;
+    gap: 32px;
+}
+
+.logo h3 {
+    color: var(--highlight-color);
+    font-weight: 900;
+    width: 70%;
+}
+
+.logo img {
+    max-width: 70%;
+    height: auto;
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(360deg) brightness(100%) contrast(100%);
+}
