@@ -3,6 +3,8 @@ package pds.comasy.patterns.votingsStrategy.messageFactory;
 import java.util.Date;
 
 public class RepublicMessage implements Message {
+    Date entryDate, exitDate;
+
     private double calculateStatus;
 
     @Override
@@ -14,6 +16,12 @@ public class RepublicMessage implements Message {
     public String messageExit(Date entryTime, Date exitTime) {
         this.calculateStatus = calculateStatus(entryTime, exitTime);
         return "O seu contrato acaba em " + exitTime + " faltam exatemente " + this.calculateStatus + " dias";
+    }
+
+    @Override
+    public void setEntryAndExitDate(Date entryDate, Date exitDate) {
+        this.entryDate = entryDate;
+        this.exitDate = exitDate;
     }
 
     @Override

@@ -4,6 +4,8 @@ import java.util.Date;
 
 public class CondominiumMessage implements Message {
 
+    Date entryDate, exitDate;
+
     double calculateStatus;
 
     @Override
@@ -15,6 +17,12 @@ public class CondominiumMessage implements Message {
     public String messageExit(Date entryTime, Date exitTime) {
         this.calculateStatus = calculateStatus(entryTime, exitTime);
         return "A entrega foi retirada no dia " + exitTime.toString() + " após " + calculateStatus + " dias na portaria";
+    }
+
+    @Override
+    public void setEntryAndExitDate(Date entryDate, Date exitDate) {
+        this.entryDate = entryDate;
+        this.exitDate = exitDate;
     }
 
     @Override
