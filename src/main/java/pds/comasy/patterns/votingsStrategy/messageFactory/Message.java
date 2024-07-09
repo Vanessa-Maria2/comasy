@@ -1,8 +1,8 @@
-package pds.comasy.patterns.votingsStrategy.notificationFactory;
+package pds.comasy.patterns.votingsStrategy.messageFactory;
 
 import java.util.Date;
 
-public interface Notification {
+public interface Message {
     String notifyEntrance(Date entryTime);
 
     String notifyExit(Date entryTime, Date exitTime);

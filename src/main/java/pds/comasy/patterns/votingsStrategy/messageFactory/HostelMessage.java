@@ -1,8 +1,8 @@
-package pds.comasy.patterns.votingsStrategy.notificationFactory;
+package pds.comasy.patterns.votingsStrategy.messageFactory;
 
 import java.util.Date;
 
-public class HostelNotification implements Notification {
+public class HostelMessage implements Message {
 
     @Override
     public String notifyEntrance(Date entryTime) {

@@ -1,8 +1,8 @@
-package pds.comasy.patterns.votingsStrategy.notificationFactory;
+package pds.comasy.patterns.votingsStrategy.messageFactory;
 
 import java.util.Date;
 
-public class RepublicNotification implements Notification {
+public class RepublicMessage implements Message {
     private double calculateStatus;
 
     @Override

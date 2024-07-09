@@ -1,8 +1,8 @@
-package pds.comasy.patterns.votingsStrategy.notificationFactory;
+package pds.comasy.patterns.votingsStrategy.messageFactory;
 
 import java.util.Date;
 
-public class CondominiumNotification implements Notification {
+public class CondominiumMessage implements Message {
 
     double calculateStatus;
 
