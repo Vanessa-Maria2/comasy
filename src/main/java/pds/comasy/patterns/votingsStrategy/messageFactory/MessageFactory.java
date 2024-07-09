@@ -1,18 +1,22 @@
 package pds.comasy.patterns.votingsStrategy.messageFactory;
 
-public class MessageFactory {
+import java.util.HashMap;
 
-    public Message createNotification(String establishmentType) {
-        switch (establishmentType) {
-            case "hostel":
-                return new HostelMessage();
-            case "republic":
-                return new RepublicMessage();
-            case "condominium":
-                return new CondominiumMessage();
-            default:
-                throw new IllegalArgumentException("Invalid establishment type: " + establishmentType);
-        }
+public class MessageFactory {
+    HashMap<String, Message> messagesOfEstablisment;
+
+    MessageFactory() {
+        messagesOfEstablisment = new HashMap<>();
+        messagesOfEstablisment.put("hostel", new HostelMessage());
+        messagesOfEstablisment.put("republic", new RepublicMessage());
+        messagesOfEstablisment.put("condominium", new CondominiumMessage());
     }
 
+    public Message createMessage(String establishmentType) {
+        Message message = this.messagesOfEstablisment.get(establishmentType);
+        if (message == null) {
+            throw new IllegalArgumentException("Invalid establishment type: " + establishmentType);
+        }
+        return message;
+    }
 }

@@ -6,12 +6,12 @@ public class RepublicMessage implements Message {
     private double calculateStatus;
 
     @Override
-    public String notifyEntrance(Date entryTime) {
+    public String messageEntrance(Date entryTime) {
         return "Seu contrato iniciou em "+ entryTime.toString();
     }
 
     @Override
-    public String notifyExit(Date entryTime, Date exitTime) {
+    public String messageExit(Date entryTime, Date exitTime) {
         this.calculateStatus = calculateStatus(entryTime, exitTime);
         return "O seu contrato acaba em " + exitTime + " faltam exatemente " + this.calculateStatus + " dias";
     }

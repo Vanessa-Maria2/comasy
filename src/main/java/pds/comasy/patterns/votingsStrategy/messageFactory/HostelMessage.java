@@ -5,12 +5,12 @@ import java.util.Date;
 public class HostelMessage implements Message {
 
     @Override
-    public String notifyEntrance(Date entryTime) {
+    public String messageEntrance(Date entryTime) {
         return "Você tem visita agendado para hoje dia " + entryTime.getTime();
     }
 
     @Override
-    public String notifyExit(Date entryTime, Date exitTime) {
+    public String messageExit(Date entryTime, Date exitTime) {
         return "Fim da visita: " + exitTime.getTime();
     }
 

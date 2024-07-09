@@ -7,12 +7,12 @@ public class CondominiumMessage implements Message {
     double calculateStatus;
 
     @Override
-    public String notifyEntrance(Date entryTime) {
+    public String messageEntrance(Date entryTime) {
         return "A entrega chegou no dia " + entryTime.toString() + " na portaria do condomínio";
     }
 
     @Override
-    public String notifyExit(Date entryTime, Date exitTime) {
+    public String messageExit(Date entryTime, Date exitTime) {
         this.calculateStatus = calculateStatus(entryTime, exitTime);
         return "A entrega foi retirada no dia " + exitTime.toString() + " após " + calculateStatus + " dias na portaria";
     }
