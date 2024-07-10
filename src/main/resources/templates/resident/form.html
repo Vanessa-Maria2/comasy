@@ -59,14 +59,14 @@
                 <div class="col-md-6">
                     <div class="mb-3 form-group">
                         <label for="input-entry-date">Data de Entrada</label>
-                        <input type="date" class="form-control" id="input-entry-date" name="entryDate">
+                        <input type="date" class="form-control" id="input-entry-date" name="userAuthentication.entryDate">
                     </div>
                 </div>
 
                 <div class="col-md-6">
                     <div class="mb-3 form-group">
                         <label for="input-exit-date">Data de Saída</label>
-                        <input type="date" class="form-control" id="input-exit-date" name="exitDate">
+                        <input type="date" class="form-control" id="input-exit-date" name="userAuthentication.exitDate">
                     </div>
                 </div>
             </div>
@@ -164,7 +164,8 @@
             data: JSON.stringify(residentDto),
             dataType: 'json',
             success: function (data) {
-                showMessage('Residente criado com sucesso', 'success');
+                // showMessage('Residente criado com sucesso', 'success');
+                window.location.href = '/login?message=Cadastro realizado com sucesso&type=success';
             },
             error: function (error) {
                 console.log(error.responseJSON.errors);

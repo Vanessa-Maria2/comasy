@@ -33,11 +33,21 @@ public class SecurityConfiguration {
                         .requestMatchers("/css/**", "/img/**", "/js/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/resident/form").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/resident").permitAll()
                         .requestMatchers(HttpMethod.GET, "/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/reception").authenticated()
                         .requestMatchers(HttpMethod.GET, "/resident/**").authenticated()
                         .requestMatchers(HttpMethod.GET, "/suggestion/**").authenticated()
                         .anyRequest().authenticated()
+                )
+                .headers(headers -> headers
+                        .cacheControl(cacheControl -> cacheControl.disable())) // Desativa o cache de cabeçalho para todos os endpoints
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login")
+                        .invalidateHttpSession(true) // Invalida a sessão HTTP
+                        .deleteCookies("jwt") // Deleta o cookie 'jwt'
                 )
                 .build();
     }

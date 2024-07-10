@@ -42,6 +42,13 @@
 <script th:src="@{/webjars/bootstrap/4.5.0/js/bootstrap.min.js}"></script>
 <script>
     $(document).ready(function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const message = urlParams.get('message');
+        const type = urlParams.get('type');
+        if (message) {
+            showAlert(message, type);
+        }
+
         $('#loginButton').click(function () {
             submitLogin();
         });
