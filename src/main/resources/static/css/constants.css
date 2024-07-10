@@ -20,3 +20,19 @@ body {
     margin: 5% 5% 5% 20%;
     max-width: 100%;
 }
+
+.btn {
+    border: none;
+    background-color: var(--highlight-color);
+    color: var(--background-color);
+    font-weight: 700;
+}
+
+.btn:hover {
+    background-color: var(--highlight-dark);
+    color: var(--background-color);
+}
+
+.btn-block {
+    width: 100%;
+}

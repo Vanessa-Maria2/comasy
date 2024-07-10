@@ -31,16 +31,6 @@ body {
     margin-bottom: 15px;
 }
 
-.btn {
-    border: none;
-    background-color: var(--highlight-color);
-    font-weight: 700;
-}
-
-.btn-block {
-    width: 100%;
-}
-
 .logo {
     display: flex;
     flex-direction: column;
@@ -61,4 +51,17 @@ body {
     max-width: 70%;
     height: auto;
     filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(360deg) brightness(100%) contrast(100%);
+}
+
+.signin-text {
+    margin-top: 12px;
+}
+
+.signin-text a {
+    color: var(--background-color);
+    text-decoration: none;
+}
+
+.signin-text .highlight {
+    color: var(--highlight-color);
 }
