@@ -6,14 +6,18 @@ import org.springframework.stereotype.Service;
 import pds.comasy.entity.UserAuthentication;
 import pds.comasy.patterns.votingsStrategy.messageFactory.MessageFactory;
 
+import java.util.List;
+
 @Service
 public class MessageService {
 
-    public MessageFactory getMessage() {
+    public List<String> getMessage() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserAuthentication user = (UserAuthentication) authentication.getPrincipal();
+
         MessageFactory messageFactory = new MessageFactory();
-        messageFactory.createMessage("hostel", user.getEntryDate(), user.getExitDate()).messageExit(user.getEntryDate(), user.getExitDate());
-        return messageFactory;
+
+        List<String> msgs = messageFactory.createMessage("hostel", user.getEntryDate(), user.getExitDate());
+        return msgs;
     }
 }
