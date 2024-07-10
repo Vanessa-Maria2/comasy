@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import pds.comasy.enums.EnumRole;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -41,10 +42,18 @@ public class UserAuthentication implements UserDetails {
     @Column(name = "role")
     private EnumRole role;
 
-    public UserAuthentication(String username, String password, EnumRole role) {
+    @Column(name = "entryDate")
+    private Date entryDate;
+
+    @Column(name = "exitDate")
+    private Date exitDate;
+
+    public UserAuthentication(String username, String password, EnumRole role, Date entryDate, Date exitDate) {
         this.username = username;
         this.password = password;
         this.role = role;
+        this.entryDate = entryDate;
+        this.exitDate = exitDate;
     }
 
     @Override

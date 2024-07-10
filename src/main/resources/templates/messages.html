@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.5.0/css/bootstrap.min.css}"/>
+    <script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/constants.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/sidebar.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/message.css}"/>
+
+    <link rel="stylesheet" type="text/css"
+          th:href="@{${#strings.concat('/css/', @environment.getProperty('systemType'), '-palette.css')}}" />
+    <title>Message</title>
+</head>
+<body>
+    <div th:insert="~{../static/fragments/nav-bar :: nav}"></div>
+
+    <div class="container">
+        <h4>Seja Bem-Vindo (a)!</h4>
+        <p>
+            É um prazer trazer o melhor para você cliente!
+        </p>
+
+        <h4>O que oferecemos:</h4>
+        <ul>
+            <li>Ambientes compartilhados confortáveis</li>
+            <li>Comunidade acolhedora e diversa</li>
+            <li>Atividades sociais regulares</li>
+            <li>Espaços de lazer e convívio</li>
+        </ul>
+    </div>
+    <div class="container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Mensagens</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="message : ${messages}">
+                <td th:text="${message}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -46,7 +46,7 @@ public class AuthenticationService {
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.getPassword());
         EnumRole role = EnumRole.valueOf(data.getRole().toUpperCase());
-        UserAuthentication newUser = new UserAuthentication(data.getUsername(), encryptedPassword, role);
+        UserAuthentication newUser = new UserAuthentication(data.getUsername(), encryptedPassword, role, data.getEntryDate(), data.getExitDate());
 
         userAuthenticationRepository.save(newUser);
     }

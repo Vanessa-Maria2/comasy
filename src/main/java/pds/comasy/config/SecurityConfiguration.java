@@ -32,7 +32,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/webjars/**").permitAll()
                         .requestMatchers("/css/**", "/img/**", "/js/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/register").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                         .requestMatchers(HttpMethod.GET, "/login").permitAll()
                         .requestMatchers(HttpMethod.GET, "/reception").authenticated()
                         .requestMatchers(HttpMethod.GET, "/resident/**").authenticated()
