@@ -1,47 +1,95 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.5.0/css/bootstrap.min.css}"/>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.5.0/css/bootstrap.min.css}" />
     <script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/constants.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/sidebar.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/message.css}"/>
-
+    <link rel="stylesheet" type="text/css" th:href="@{/css/constants.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/sidebar.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/message.css}" />
     <link rel="stylesheet" type="text/css"
-          th:href="@{${#strings.concat('/css/', @environment.getProperty('systemType'), '-palette.css')}}" />
+        th:href="@{${#strings.concat('/css/', @environment.getProperty('systemType'), '-palette.css')}}" />
     <title>Message</title>
 </head>
+
 <body>
     <div th:insert="~{../static/fragments/nav-bar :: nav}"></div>
 
     <div class="container">
-        <h4>Seja Bem-Vindo (a)!</h4>
-        <p>
-            É um prazer trazer o melhor para você cliente!
-        </p>
+        <div class="row">
+            <div class="col-lg-8">
+                <h4 class="titulo"
+                    th:text="${systemType == 'condominium' ? 'Bem-vindos ao Gerenciador Condomínio' : (systemType == 'hostel' ? 'Bem-vindos ao Gerenciador Hostel' : 'Bem-vindos ao Gerenciador República')}">
+                </h4>
+                <p>
+                    É um prazer trazer o melhor para você, cliente!
+                </p>
 
-        <h4>O que oferecemos:</h4>
-        <ul>
-            <li>Ambientes compartilhados confortáveis</li>
-            <li>Comunidade acolhedora e diversa</li>
-            <li>Atividades sociais regulares</li>
-            <li>Espaços de lazer e convívio</li>
-        </ul>
-    </div>
-    <div class="container">
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Mensagens</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="message : ${messages}">
-                <td th:text="${message}"></td>
-            </tr>
-            </tbody>
-        </table>
+                <h4 class="titulo">O que oferecemos:</h4>
+                <ul>
+                    <li>Ambientes compartilhados confortáveis</li>
+                    <li>Comunidade acolhedora e diversa</li>
+                    <li>Atividades sociais regulares</li>
+                    <li>Espaços de lazer e convívio</li>
+                </ul>
+
+                <div class="row">
+                    <div class="col-lg-3 col-md-4 mb-4">
+                        <div class="card">
+                            <img th:src="@{/img/piscina.jpeg}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Piscina</h5>
+                                <p class="card-text">Ambientes compartilhados confortáveis</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 mb-4">
+                        <div class="card">
+                            <img th:src="@{/img/lazer.jpg}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Área de lazer</h5>
+                                <p class="card-text">Espaços de lazer e convívio</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 mb-4">
+                        <div class="card">
+                            <img th:src="@{/img/academia.jpg}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Academia</h5>
+                                <p class="card-text">Atividades físicas</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-4 mb-4">
+                        <div class="card">
+                            <img th:src="@{/img/quadra.jpg}" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Quadra de esportes</h5>
+                                <p class="card-text">Espaço de lazer e saúde</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="mensagens">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Mensagens</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="message : ${messages}">
+                            <td th:text="${message}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
