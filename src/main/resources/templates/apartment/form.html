@@ -19,7 +19,7 @@
 <div class="container">
     <h1 class="mt-5">Cadastro de Apartamento</h1>
 
-    <form id="apartmentForm" th:action="@{/apartment/cadastrar}" method="post" class="mb-5" th:object="${apartment}">
+    <form id="apartmentForm" method="post" class="mb-5">
 
         <div class="row mb-3">
             <div class="col-6">
@@ -34,7 +34,7 @@
             <div class="col-6">
                 <label for="input-condominium">Condomínio</label>
                 <select class="form-control" id="input-condominium"  name="condominiumId">
-                    <option th:each="c : ${listCondominium}" th:value="${c.id}" th:text="${c.name + '-' + c.streetAddress + ',' + c.neighborhood + ',' + c.city + '/' + c.state + ' ' + c.zipCode }"></option>
+                    <option th:each="c : ${listCondominium}" th:value="${c.id}" th:text="${c.name + ' - ' + c.streetAddress + ', ' + c.neighborhood + ', ' + c.city + '/' + c.state + ', ' + c.zipCode }"></option>
                 </select>
             </div>
 
@@ -44,13 +44,41 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary mb-3">Salvar</button>
+        <button type="button" class="btn btn-primary mb-3" onclick="submitForm()">Salvar</button>
     </form>
 </div>
 <script>
     $(document).ready(function() {
         $('#input-residentOwnerCpf').mask('000.000.000-00');
     });
+
+    
+    function submitForm() {
+            var form = $('#apartmentForm')[0];
+
+            var apartmentDto = {
+                number: $('#input-number').val(),
+                block: $('#input-block').val(),
+                residentOwnerCpf: $('#input-residentOwnerCpf').val(),
+            };
+            const condominiumId = parseInt($('#input-condominium').val())
+
+            $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                url: `/apartment/${condominiumId}`,
+                data: JSON.stringify(apartmentDto),
+                dataType: 'json',
+                success: function (data) {
+                    window.location.href = '/apartment/list?msg=Apartamento cadastrado com sucesso&type=success';
+                },
+                error: function (error) {
+                    console.log(error.responseJSON.errors);
+                    showMessage('Erro ao criar apartamento: ' + error.responseJSON.errors, 'danger');
+                }
+            });
+        }
+
 </script>
 </body>
 </html>
