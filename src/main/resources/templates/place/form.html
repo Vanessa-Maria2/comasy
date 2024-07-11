@@ -16,9 +16,11 @@
 <body>
 <div th:insert="~{../static/fragments/nav-bar :: nav}"></div>
 <div class="container">
+    <div id="alertContainer"></div>
+
     <h1 class="mt-5" th:text="${systemType == 'condominium' ? 'Cadastro de Condomínio' : (systemType == 'hostel' ? 'Cadastro de Hostel' : 'Cadastro de República')}"></h1>
 
-    <form id="placeForm" th:action="@{/place/cadastrar}" method="post" class="mb-5" th:object="${place}">
+    <form id="placeForm" class="mb-5" th:object="${place}">
 
         <div class="row mb-3">
             <div class="col">
@@ -102,16 +104,63 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Salvar</button>
+        <button type="button" class="btn btn-primary" onclick="addPlace()">Salvar</button>
+
     </form>
 </div>
+<script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.5.0/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/alert.js}"></script>
 <script>
-    $(document).ready(function() {
-        $('#input-cnpj').mask('00.000.000/0000-00');
-        $('#input-owner-cpf').mask('000.000.000-00');
-        $('#input-tel').mask('(00) 00000-0000');
-        $('#input-cep').mask('00000-000');
-    });
+
+        $(document).ready(function() {
+            $('#input-cnpj').mask('00.000.000/0000-00');
+            $('#input-owner-cpf').mask('000.000.000-00');
+            $('#input-tel').mask('(00) 00000-0000');
+            $('#input-cep').mask('00000-000');
+
+            $('#placeForm').submit(function(event) {
+                event.preventDefault(); // Evita o comportamento padrão de recarregar a página
+                addPlace();
+            });
+        });
+
+        function addPlace() {
+                $.ajax({
+                    type: 'POST',
+                    url: '/place/cadastrar',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        name: $('#input-name').val(),
+                        number: $('#input-number').val(),
+                        cnpj: $('#input-cnpj').val(),
+                        telephoneNumber: $('#input-tel').val(),
+                        zipcode: $('#input-cep').val(),
+                        streetAddress: $('#input-rua').val(),
+                        neighborhood: $('#input-bairro').val(),
+                        city: $('#input-cidade').val(),
+                        state: $('#input-estado').val(),
+                        capacity: $('#input-capacity').val(),
+                        qtyRooms: $('#input-qty-rooms').val(),
+                        residentOwnerCpf: $('#input-owner-cpf').val(),
+                        rentPrice: $('#input-rent-price').val(),
+                        qtyBlocks: $('#input-qty-blocks').val(),
+                        qtyApartments: $('#input-qty-apartments').val()
+                    }),
+                    success: function () {
+                        window.location.href = '/place/list';
+                    },
+                    error: function (response) {
+                        let errorMessage = 'Erro ao cadastrar lugar.';
+                        if (response.responseText) {
+                            errorMessage = response.responseText;
+                        }
+                        showAlert(errorMessage, 'danger');
+                        event.preventDefault();
+                    }
+                });
+        }
+
 </script>
 </body>
 </html>

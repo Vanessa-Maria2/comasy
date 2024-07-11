@@ -2,6 +2,8 @@ package pds.comasy.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import pds.comasy.dto.PlaceDTO;
@@ -10,6 +12,7 @@ import pds.comasy.exceptions.InvalidFieldException;
 import pds.comasy.service.PlaceService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/place")
@@ -31,25 +34,13 @@ public class PlaceController {
     }
 
     @PostMapping("/cadastrar")
-    public ModelAndView createPlace(@ModelAttribute("place") PlaceDTO placeDto) {
-        ModelAndView modelAndView = new ModelAndView("redirect:/place/list");
+    public ResponseEntity<?> createPlace(@RequestBody PlaceDTO placeDto) {
         try {
             placeService.savePlace(placeDto);
-            modelAndView.addObject("message", "Lugar cadastrado com sucesso!");
-            modelAndView.addObject("type", "success");
-        } catch (InvalidFieldException e) {
-            e.printStackTrace();
-            modelAndView.setViewName("redirect:/place/form");
-            modelAndView.addObject("message", e.getMessage());
-            modelAndView.addObject("type", "danger");
+            return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
-            e.printStackTrace();
-            modelAndView.setViewName("redirect:/place/form");
-            modelAndView.addObject("message", "Erro ao cadastrar lugar.");
-            modelAndView.addObject("type", "danger");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
         }
-        modelAndView.addObject("systemType", systemType);
-        return modelAndView;
     }
 
     @GetMapping("/list")
@@ -75,5 +66,4 @@ public class PlaceController {
         modelAndView.addObject("places", places);
         return modelAndView;
     }
-    // Add methods for listing, updating, and deleting places
 }

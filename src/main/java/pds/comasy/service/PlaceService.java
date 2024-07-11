@@ -51,6 +51,8 @@ public class PlaceService {
     }
 
     public void savePlace(PlaceDTO placeDto) throws InvalidFieldException {
+        validateFields(placeDto);
+
         if ("condominium".equals(systemType)) {
             Condominium condominium = new Condominium();
             mapPlaceDtoToCondominium(placeDto, condominium);
@@ -117,5 +119,46 @@ public class PlaceService {
         place.setStreetAddress(placeDto.getStreetAddress());
         place.setCity(placeDto.getCity());
         place.setState(placeDto.getState());
+    }
+
+    private void validateFields(PlaceDTO placeDto) throws InvalidFieldException {
+        if (placeDto.getName() == null || placeDto.getName().isEmpty()) {
+            throw new InvalidFieldException("Nome é obrigatório.");
+        }
+        if (placeDto.getCity() == null || placeDto.getCity().isEmpty() ||
+                placeDto.getState() == null || placeDto.getState().isEmpty() ||
+                placeDto.getNeighborhood() == null || placeDto.getNeighborhood().isEmpty() ||
+                placeDto.getStreetAddress() == null || placeDto.getStreetAddress().isEmpty() ||
+                placeDto.getZipcode() == null || placeDto.getZipcode().isEmpty()) {
+            throw new InvalidFieldException("Todos os campos relacionados ao endereço do lugar são obrigatórios.");
+        }
+        if ("condominium".equals(systemType)) {
+            if (placeDto.getCnpj() == null || placeDto.getCnpj().isEmpty()) {
+                throw new InvalidFieldException("CNPJ é obrigatório.");
+            }
+            if (placeDto.getQtyBlocks() <= 0) {
+                throw new InvalidFieldException("Quantidade de Blocos deve ser maior que zero.");
+            }
+            if (placeDto.getQtyApartments() <= 0) {
+                throw new InvalidFieldException("Quantidade de Apartamentos deve ser maior que zero.");
+            }
+        } else if ("hostel".equals(systemType)) {
+            if (placeDto.getCnpj() == null || placeDto.getCnpj().isEmpty()) {
+                throw new InvalidFieldException("CNPJ é obrigatório.");
+            }
+            if (placeDto.getResidentOwnerCpf() == null || placeDto.getResidentOwnerCpf().isEmpty()) {
+                throw new InvalidFieldException("CPF do Proprietário é obrigatório.");
+            }
+            if (placeDto.getCapacity() <= 0) {
+                throw new InvalidFieldException("Capacidade do Hostel deve ser maior que zero.");
+            }
+            if (placeDto.getQtyRooms() <= 0) {
+                throw new InvalidFieldException("Quantidade de Quartos do Hostel deve ser maior que zero.");
+            }
+        } else if ("republic".equals(systemType)) {
+            if (placeDto.getQtyRooms() <= 0) {
+                throw new InvalidFieldException("Quantidade de Quartos da República deve ser maior que zero.");
+            }
+        }
     }
 }
