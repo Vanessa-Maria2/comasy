@@ -10,10 +10,10 @@ import pds.comasy.entity.Suggestion;
 import pds.comasy.exceptions.EntitySaveFailureException;
 import pds.comasy.exceptions.FailedToDeleteException;
 import pds.comasy.exceptions.NotFoundException;
-import pds.comasy.patterns.votingsStrategy.CategorizedSuggestionStrategy;
-import pds.comasy.patterns.votingsStrategy.RankedSuggestionStrategy;
-import pds.comasy.patterns.votingsStrategy.StandardSuggestionStrategy;
-import pds.comasy.patterns.votingsStrategy.SuggestionStrategy;
+import pds.comasy.patterns.suggestionsStrategy.CategorizedSuggestionStrategy;
+import pds.comasy.patterns.suggestionsStrategy.RankedSuggestionStrategy;
+import pds.comasy.patterns.suggestionsStrategy.StandardSuggestionStrategy;
+import pds.comasy.patterns.suggestionsStrategy.SuggestionStrategy;
 import pds.comasy.repository.ResidentRepository;
 import pds.comasy.repository.SuggestionRepository;
 

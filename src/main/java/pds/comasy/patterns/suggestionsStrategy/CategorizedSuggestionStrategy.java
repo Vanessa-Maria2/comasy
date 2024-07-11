@@ -1,4 +1,4 @@
-package pds.comasy.patterns.votingsStrategy;
+package pds.comasy.patterns.suggestionsStrategy;
 
 import pds.comasy.entity.Suggestion;
 

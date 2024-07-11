@@ -5,7 +5,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import pds.comasy.entity.UserAuthentication;
-import pds.comasy.patterns.votingsStrategy.messageFactory.MessageFactory;
+import pds.comasy.patterns.messageFactory.MessageFactory;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package pds.comasy.patterns.votingsStrategy.messageFactory;
+package pds.comasy.patterns.messageFactory;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

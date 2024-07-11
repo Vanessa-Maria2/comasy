@@ -64,8 +64,7 @@ public class UserAuthentication implements UserDetails {
                 new SimpleGrantedAuthority("ROLE_RESIDENT"),
                 new SimpleGrantedAuthority("ROLE_DOORMAN"));
         } else if(this.role == EnumRole.MANAGER) {
-            return List.of(new SimpleGrantedAuthority("ROLE_MANAGER"),
-                    new SimpleGrantedAuthority("ROLE_RESIDENT"));
+            return List.of(new SimpleGrantedAuthority("ROLE_MANAGER"));
         } else if (this.role == EnumRole.RESIDENT) {
             return List.of(new SimpleGrantedAuthority("ROLE_RESIDENT"));
         } else {
