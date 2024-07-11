@@ -6,21 +6,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import pds.comasy.dto.ApartmentDto;
-import pds.comasy.entity.Condominium;
 import pds.comasy.exceptions.EntityAlreadyExistsException;
 import pds.comasy.exceptions.InvalidFieldException;
 import pds.comasy.exceptions.NotFoundException;
-import pds.comasy.repository.CondominiumRepository;
 import pds.comasy.service.ApartmentService;
 import pds.comasy.service.CondominiumService;
 
@@ -35,9 +31,6 @@ public class ApartmentController {
 
     @Autowired
     private CondominiumService condominiumService;
-
-    @Autowired
-    private CondominiumRepository condominiumRepository;
 
     @GetMapping("/")
     public ModelAndView index() {
@@ -57,23 +50,10 @@ public class ApartmentController {
         return modelAndView;
     }
 
-    @PostMapping("/cadastrar")
-    public ModelAndView createdApartment(@ModelAttribute("apartment") ApartmentDto apartmentDto, @RequestParam("condominiumId") Long condominiumId) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/apartment/list");
-        try {
-            Condominium condominium = (condominiumRepository.getById(condominiumId));
-            apartmentDto.setCondominium(condominium);
-            apartmentService.createdApartment(apartmentDto);
-            modelAndView.addObject("msg", "Apartment registered successfully!");
-        } catch (EntityAlreadyExistsException e) {
-            modelAndView.addObject("msg", e.getMessage());
-        } catch (InvalidFieldException e) {
-            modelAndView.addObject("msg", e.getMessage());
-        } catch (Exception e) {
-            modelAndView.addObject("msg", "An error occurred when trying to register the apartment.");
-        }
-        return modelAndView;
+    @PostMapping("/{condominiumId}")
+    public ResponseEntity<ApartmentDto> createdApartment(@RequestBody ApartmentDto apartmentDto, @PathVariable Long condominiumId) throws EntityAlreadyExistsException, InvalidFieldException {
+        ApartmentDto createdApartmentDto = apartmentService.createdApartment(apartmentDto, condominiumId);
+        return new ResponseEntity<>(createdApartmentDto, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

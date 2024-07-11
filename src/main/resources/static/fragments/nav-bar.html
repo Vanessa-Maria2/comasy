@@ -11,11 +11,8 @@
 <body>
 <div th:fragment="nav" class="sidebar">
     <div class="itens">
-        <a href="#">
+        <a th:href="@{/home/}">
             <span class="material-icons">home</span> Home
-        </a>
-        <a th:href="@{/message/}">
-            <span class="material-icons">message</span> Messages
         </a>
         <a th:href="@{/reception/view}">
             <span class="material-icons">vpn_key</span> Portaria

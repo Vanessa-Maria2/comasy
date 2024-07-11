@@ -3,6 +3,7 @@ package pds.comasy.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.ModelAndView;
 import pds.comasy.dto.CondominiumDto;
 import pds.comasy.entity.Condominium;
 import pds.comasy.exceptions.InvalidFieldException;
@@ -20,10 +21,10 @@ public class CondominiumService {
 
     @Transactional
     public CondominiumDto createCondominium(CondominiumDto condominiumDto) throws InvalidFieldException {
-        validarCampos(condominiumDto);
-        Condominium condominium = CondominiumMapper.mapToCondominium(condominiumDto);
-        condominiumRepository.save(condominium);
-        return CondominiumMapper.mapToCondominiumDto(condominium);
+       validarCampos(condominiumDto);
+       Condominium condominium = CondominiumMapper.mapToCondominium(condominiumDto);
+       condominiumRepository.save(condominium);
+       return CondominiumMapper.mapToCondominiumDto(condominium);
     }
 
     public List<CondominiumDto> listCondominium() {
