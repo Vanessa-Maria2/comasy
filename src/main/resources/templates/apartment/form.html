@@ -1,84 +1,97 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.5.0/css/bootstrap.min.css}"/>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.5.0/css/bootstrap.min.css}" />
     <script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/constants.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/sidebar.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/constants.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/sidebar.css}" />
 
     <!-- Inclui a folha de estilo correta com base no systemType -->
     <link rel="stylesheet" type="text/css"
-          th:href="@{${#strings.concat('/css/', @environment.getProperty('systemType'), '-palette.css')}}" />
+        th:href="@{${#strings.concat('/css/', @environment.getProperty('systemType'), '-palette.css')}}" />
     <title>Cadastro de Apartamento</title>
 </head>
+
 <body>
-<div th:insert="~{../static/fragments/nav-bar :: nav}"></div>
-<div class="container">
-    <h1 class="mt-5">Cadastro de Apartamento</h1>
+    <div th:insert="~{../static/fragments/nav-bar :: nav}"></div>
+    <div class="container">
+        <h1 class="mt-5">Cadastro de Apartamento</h1>
 
-    <form id="apartmentForm" method="post" class="mb-5">
+        <form id="apartmentForm" method="post" class="mb-5">
 
-        <div class="row mb-3">
-            <div class="col-6">
-                <label for="input-number">Número</label>
-                <input type="number" class="form-control" id="input-number" name="number">
+            <div class="row mb-3">
+                <div class="col-6">
+                    <label for="input-number">Número</label>
+                    <input type="number" class="form-control" id="input-number" name="number">
+                </div>
+                <div class="col-6">
+                    <label for="input-block">Bloco</label>
+                    <input type="text" class="form-control" id="input-block" name="block">
+                </div>
+
+                <div class="col-6">
+                    <label for="input-condominium">Condomínio</label>
+                    <select class="form-control" id="input-condominium" name="condominiumId">
+                        <option th:each="c : ${listCondominium}" th:value="${c.id}"
+                            th:text="${c.name + ' - ' + c.streetAddress + ', ' + c.neighborhood + ', ' + c.city + '/' + c.state + ', ' + c.zipCode }">
+                        </option>
+                    </select>
+                </div>
+
+                <div class="col-6">
+                    <label for="input-residentOwnerCpf">CPF titular</label>
+                    <input type="text" class="form-control" id="input-residentOwnerCpf" name="residentOwnerCpf"
+                        placeholder="000.000.000-00">
+                </div>
             </div>
-            <div class="col-6">
-                <label for="input-block">Bloco</label>
-                <input type="text" class="form-control" id="input-block" name="block">
-            </div>
 
-            <div class="col-6">
-                <label for="input-condominium">Condomínio</label>
-                <select class="form-control" id="input-condominium"  name="condominiumId">
-                    <option th:each="c : ${listCondominium}" th:value="${c.id}" th:text="${c.name + ' - ' + c.streetAddress + ', ' + c.neighborhood + ', ' + c.city + '/' + c.state + ', ' + c.zipCode }"></option>
-                </select>
-            </div>
+            <button type="button" class="btn btn-primary mb-3" onclick="submitForm()">Salvar</button>
+        </form>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#input-residentOwnerCpf').mask('000.000.000-00');
+        });
 
-            <div class="col-6">
-                <label for="input-residentOwnerCpf">CPF titular</label>
-                <input type="text" class="form-control" id="input-residentOwnerCpf" name="residentOwnerCpf"  placeholder="000.000.000-00">
-            </div>
-        </div>
 
-        <button type="button" class="btn btn-primary mb-3" onclick="submitForm()">Salvar</button>
-    </form>
-</div>
-<script>
-    $(document).ready(function() {
-        $('#input-residentOwnerCpf').mask('000.000.000-00');
-    });
-
-    
-    function submitForm() {
+        function submitForm() {
             var form = $('#apartmentForm')[0];
 
             var apartmentDto = {
-                number: $('#input-number').val(),
+                number: parseInt($('#input-number').val()),
                 block: $('#input-block').val(),
                 residentOwnerCpf: $('#input-residentOwnerCpf').val(),
             };
+
             const condominiumId = parseInt($('#input-condominium').val())
 
-            $.ajax({
-                type: "POST",
-                contentType: "application/json",
-                url: `/apartment/${condominiumId}`,
-                data: JSON.stringify(apartmentDto),
-                dataType: 'json',
-                success: function (data) {
-                    window.location.href = '/apartment/list?msg=Apartamento cadastrado com sucesso&type=success';
+            fetch(`/apartment/${condominiumId}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
                 },
-                error: function (error) {
-                    console.log(error.responseJSON.errors);
-                    showMessage('Erro ao criar apartamento: ' + error.responseJSON.errors, 'danger');
-                }
-            });
+                body: JSON.stringify(apartmentDto)
+            })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(errors => {
+                            errors.forEach(error => {
+                                console.error(error);
+                            });
+                        });
+                    } else {
+                        window.location.href = '/apartment/list?msg=Apartamento cadastrado com sucesso&type=success';
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro na atualização do pedido:', error);
+                });
         }
 
-</script>
+    </script>
 </body>
+
 </html>

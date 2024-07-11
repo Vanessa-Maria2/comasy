@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Listagem de Lugares</title>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.5.0/css/bootstrap.min.css}"/>
+    <script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/constants.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/sidebar.css}"/>
+
+    <!-- Inclui a folha de estilo correta com base no systemType -->
+    <link th:href="@{${'/css/' + systemType + '-palette.css'}}" rel="stylesheet"/>
+
+</head>
+<body>
+<div th:insert="~{../static/fragments/nav-bar :: nav}"></div>
+<div class="container">
+    <div id="alertContainer"></div>
+    <div class="mb-5 d-flex justify-content-between">
+        <h1 class="title" th:text="${systemType == 'condominium' ? 'Condomínios' :
+                                   (systemType == 'hostel' ? 'Hostels' : 'Repúblicas')}"></h1>
+
+        <a th:href="@{/place/}" class="text-decoration-none">
+            <button type="button" class="btn btn-block mt-2" id="loginButton">Adicionar</button>
+        </a>
+    </div>
+    <!-- Condomínios -->
+    <div th:if="${systemType == 'condominium'}">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Número</th>
+                <th>Telefone</th>
+                <th>CEP</th>
+                <th>Rua</th>
+                <th>Bairro</th>
+                <th>Cidade</th>
+                <th>Estado</th>
+                <th>CNPJ</th>
+                <th>Quantidade de Blocos</th>
+                <th>Quantidade de Apartamentos</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Itera sobre a lista de condomínios -->
+            <tr th:each="condominium : ${places}">
+                <td th:text="${condominium.name}"></td>
+                <td th:text="${condominium.number}"></td>
+                <td th:text="${condominium.telephoneNumber}"></td>
+                <td th:text="${condominium.zipcode}"></td>
+                <td th:text="${condominium.streetAddress}"></td>
+                <td th:text="${condominium.neighborhood}"></td>
+                <td th:text="${condominium.city}"></td>
+                <td th:text="${condominium.state}"></td>
+                <td th:text="${condominium.cnpj}"></td>
+                <td th:text="${condominium.qtyBlocks}"></td>
+                <td th:text="${condominium.qtyApartments}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Hostels -->
+    <div th:if="${systemType == 'hostel'}">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Número</th>
+                <th>Telefone</th>
+                <th>CEP</th>
+                <th>Rua</th>
+                <th>Bairro</th>
+                <th>Cidade</th>
+                <th>Estado</th>
+                <th>CNPJ</th>
+                <th>Capacidade</th>
+                <th>Quantidade de Quartos</th>
+                <th>CPF do Proprietário</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Itera sobre a lista de hostels -->
+            <tr th:each="hostel : ${places}">
+                <td th:text="${hostel.name}"></td>
+                <td th:text="${hostel.number}"></td>
+                <td th:text="${hostel.telephoneNumber}"></td>
+                <td th:text="${hostel.zipcode}"></td>
+                <td th:text="${hostel.streetAddress}"></td>
+                <td th:text="${hostel.neighborhood}"></td>
+                <td th:text="${hostel.city}"></td>
+                <td th:text="${hostel.state}"></td>
+                <td th:text="${hostel.cnpj}"></td>
+                <td th:text="${hostel.capacity}"></td>
+                <td th:text="${hostel.qtyRooms}"></td>
+                <td th:text="${hostel.residentOwnerCpf}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Repúblicas -->
+    <div th:if="${systemType == 'republic'}">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Número</th>
+                <th>Telefone</th>
+                <th>CEP</th>
+                <th>Rua</th>
+                <th>Bairro</th>
+                <th>Cidade</th>
+                <th>Estado</th>
+                <th>Quantidade de Quartos</th>
+                <th>Preço do Aluguel</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Itera sobre a lista de repúblicas -->
+            <tr th:each="republic : ${places}">
+                <td th:text="${republic.name}"></td>
+                <td th:text="${republic.number}"></td>
+                <td th:text="${republic.telephoneNumber}"></td>
+                <td th:text="${republic.zipcode}"></td>
+                <td th:text="${republic.streetAddress}"></td>
+                <td th:text="${republic.neighborhood}"></td>
+                <td th:text="${republic.city}"></td>
+                <td th:text="${republic.state}"></td>
+                <td th:text="${republic.qtyRooms}"></td>
+                <td th:text="${republic.rentPrice}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+<script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/4.5.0/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/alert.js}"></script>
+<script>
+    $(document).ready(function() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const message = urlParams.get('message');
+        const type = urlParams.get('type');
+        if (message) {
+            showAlert(message, type);
+        }
+    });
+</script>
+</body>
+</html>

@@ -10,37 +10,17 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "condominium")
-public class Condominium {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "condominium_id")
-    private Long id;
-
-    @Column(nullable = false)
-    private String name;
+public class Condominium extends Place {
 
     @Column(nullable = false)
     private String cnpj;
 
     @Column(nullable = false)
-    private String telephoneNumber;
+    private int qtyBlocks;
 
     @Column(nullable = false)
-    private String zipCode;
+    private int qtyApartments;
 
-    @Column(nullable = false)
-    private String streetAddress;
-
-    @Column(nullable = false)
-    private String neighborhood;
-
-    @Column(nullable = false)
-    private String city;
-
-    @Column(nullable = false)
-    private String state;
-
-    @OneToMany
-    List<Apartment> apartmentList;
+    @OneToMany(mappedBy = "condominium", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Apartment> apartmentList;
 }
