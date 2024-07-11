@@ -11,8 +11,8 @@ import pds.comasy.service.MessageService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/message")
-public class MessageController {
+@RequestMapping("/home")
+public class HomeController {
 
     @Autowired
     private MessageService messageService;
@@ -20,7 +20,7 @@ public class MessageController {
     @GetMapping("/")
     public ModelAndView getMessageList() {
         ModelAndView model = new ModelAndView();
-        model.setViewName("messages");
+        model.setViewName("home");
         try {
             List<String> messageList = messageService.getMessage();
             model.addObject("messages", messageList);

@@ -71,7 +71,7 @@
                 data: JSON.stringify({username: username, password: password}),
                 success: function () {
                     showAlert('Login successful');
-                    window.location.href = '/reception/view';
+                    window.location.href = '/home/';
                 },
                 error: function (response) {
                     let errorMessage = 'An unknown error occurred';
