@@ -1,77 +1,111 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.5.0/css/bootstrap.min.css}"/>
-    <script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.5.0/css/bootstrap.min.css}" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/constants.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/sidebar.css}"/>
+    <script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/constants.css}" />
+    <link rel="stylesheet" type="text/css" th:href="@{/css/sidebar.css}" />
 
     <!-- Inclui a folha de estilo correta com base no systemType -->
     <link rel="stylesheet" type="text/css"
-          th:href="@{${#strings.concat('/css/', @environment.getProperty('systemType'), '-palette.css')}}" />
+        th:href="@{${#strings.concat('/css/', @environment.getProperty('systemType'), '-palette.css')}}" />
     <title>Cadastro de Condomínio</title>
 </head>
+
 <body>
-<div th:insert="~{../static/fragments/nav-bar :: nav}"></div>
-<div class="container">
-    <h1 class="mt-5">Cadastro de Condomínio</h1>
+    <div th:insert="~{../static/fragments/nav-bar :: nav}"></div>
+    <div class="container">
+        <h1 class="mt-5">Cadastro de Condomínio</h1>
 
-    <form id="condominiumForm" th:action="@{/condominium/cadastrar}" method="post" class="mb-5" th:object="${condominium}">
+        <form id="condominiumForm" method="post" class="mb-5">
 
-        <div class="row mb-3">
-            <div class="col">
-                <label for="input-name">Nome</label>
-                <input type="text" class="form-control" id="input-name" name="name">
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="input-name">Nome</label>
+                    <input type="text" class="form-control" id="input-name" name="name">
+                </div>
+                <div class="col">
+                    <label for="input-cnpj">CNPJ</label>
+                    <input type="text" class="form-control" id="input-cnpj" name="cnpj"
+                        placeholder="00.000.000/0000-00">
+                </div>
             </div>
-            <div class="col">
-                <label for="input-cnpj">CNPJ</label>
-                <input type="text" class="form-control" id="input-cnpj" name="cnpj" placeholder="00.000.000/0000-00">
-            </div>
-        </div>
 
-        <div class="row mb-3">
-            <div class="col">
-                <label for="input-tel">Telefone</label>
-                <input type="text" class="form-control" id="input-tel" name="telephoneNumber"  placeholder="(00) 00000-0000">
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="input-tel">Telefone</label>
+                    <input type="text" class="form-control" id="input-tel" name="telephoneNumber"
+                        placeholder="(00) 00000-0000">
+                </div>
+                <div class="col">
+                    <label for="input-cep">CEP</label>
+                    <input type="text" class="form-control" id="input-cep" name="zipCode" placeholder="00000-000">
+                </div>
+                <div class="col">
+                    <label for="input-rua">Rua</label>
+                    <input type="text" class="form-control" id="input-rua" name="streetAddress">
+                </div>
             </div>
-            <div class="col">
-                <label for="input-cep">CEP</label>
-                <input type="text" class="form-control" id="input-cep" name="zipCode" placeholder="00000-000">
-            </div>
-            <div class="col">
-                <label for="input-rua">Rua</label>
-                <input type="text" class="form-control" id="input-rua" name="streetAddress">
-            </div>
-        </div>
 
-        <div class="row mb-3">
-            <div class="col">
-                <label for="input-bairro">Bairro</label>
-                <input type="text" class="form-control" id="input-bairro" name="neighborhood">
+            <div class="row mb-3">
+                <div class="col">
+                    <label for="input-bairro">Bairro</label>
+                    <input type="text" class="form-control" id="input-bairro" name="neighborhood">
+                </div>
+                <div class="col">
+                    <label for="input-cidade">Cidade</label>
+                    <input type="text" class="form-control" id="input-cidade" name="city">
+                </div>
+                <div class="col">
+                    <label for="input-estado">Estado</label>
+                    <input type="text" class="form-control" id="input-estado" name="state">
+                </div>
             </div>
-            <div class="col">
-                <label for="input-cidade">Cidade</label>
-                <input type="text" class="form-control" id="input-cidade" name="city">
-            </div>
-            <div class="col">
-                <label for="input-estado">Estado</label>
-                <input type="text" class="form-control" id="input-estado" name="state">
-            </div>
-        </div>
 
-        <button type="submit" class="btn btn-primary">Salvar</button>
-    </form>
-</div>
-<script>
-    $(document).ready(function() {
-        $('#input-cnpj').mask('00.000.000/0000-00');
+            <button type="button" class="btn btn-primary" onclick="submitForm()">Salvar</button>
+        </form>
+    </div>
 
-        $('#input-tel').mask('(00) 00000-0000');
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#input-cnpj').mask('00.000.000/0000-00');
 
-        $('#input-cep').mask('00000-000');
-    });
-</script>
+            $('#input-tel').mask('(00) 00000-0000');
+
+            $('#input-cep').mask('00000-000');
+        });
+
+        function submitForm() {
+            var form = $('#condominiumForm')[0];
+            var condominiumDto = {
+                name: $('#input-name').val(),
+                cnpj: $('#input-cnpj').val(),
+                telephoneNumber: $('#input-tel').val(),
+                zipCode: $('#input-cep').val(),
+                streetAddress: $('#input-rua').val(),
+                neighborhood: $('#input-bairro').val(),
+                city: $('#input-cidade').val(),
+                state: $('#input-estado').val()
+            };
+
+            $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                url: "/condominium",
+                data: JSON.stringify(condominiumDto),
+                dataType: 'json',
+                success: function (data) {
+                    window.location.href = '/condominium/listar?msg=Condomínio cadastrado com sucesso&type=success';
+                },
+                error: function (error) {
+                    console.log(error.responseJSON.errors);
+                    showMessage('Erro ao criar condomínio: ' + error.responseJSON.errors, 'danger');
+                }
+            });
+        }
+    </script>
 </body>
 </html>

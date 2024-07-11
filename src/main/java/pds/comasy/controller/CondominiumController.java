@@ -1,6 +1,7 @@
 package pds.comasy.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -35,19 +36,10 @@ public class CondominiumController {
         return modelAndView;
     }
 
-    @PostMapping("/cadastrar")
-    public ModelAndView createdCondominium(@ModelAttribute("condominium") CondominiumDto condominiumDto) {
-        ModelAndView modelAndView = new ModelAndView();
-        try {
-            CondominiumDto condominium = condominiumService.createCondominium(condominiumDto);
-            modelAndView.setViewName("redirect:/condominium/listar");
-            modelAndView.addObject("msg", "Condomínio cadastrado com sucesso!");
-        } catch (InvalidFieldException e) {
-            modelAndView.addObject("msg", e.getMessage());
-        } catch (Exception e) {
-            modelAndView.addObject("msg", e.getMessage());
-        }
-        return modelAndView;
+    @PostMapping
+    public ResponseEntity<CondominiumDto> createdCondominium(@RequestBody CondominiumDto condominiumDto) throws InvalidFieldException {
+        CondominiumDto createdCondominiumDto = condominiumService.createCondominium(condominiumDto);
+        return new ResponseEntity<>(createdCondominiumDto, HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
