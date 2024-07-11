@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class RepublicMessage implements Message {
-    Date entryDate, exitDate;
 
     private double calculateStatus;
 
@@ -18,19 +17,13 @@ public class RepublicMessage implements Message {
     public String messageExit(Date entryTime, Date exitTime) {
         this.calculateStatus = calculateStatus(entryTime, exitTime);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        return "O seu contrato acaba em " + dateFormat.format(exitTime) + " faltam exatemente " + this.calculateStatus + " dias";
-    }
-
-    @Override
-    public void setEntryAndExitDate(Date entryDate, Date exitDate) {
-        this.entryDate = entryDate;
-        this.exitDate = exitDate;
+        return "O seu contrato acaba no dia " + dateFormat.format(exitTime) + " faltam " + this.calculateStatus + " horas";
     }
 
     @Override
     public double calculateStatus(Date entryTime, Date exitTime) {
         Date dateCurrent = new Date();
         this.calculateStatus = exitTime.getTime() - dateCurrent.getTime();
-        return calculateStatus/ (1000 * 60 * 60 * 24);
+        return Math.round(calculateStatus/(1000 * 60 * 60));
     }
 }
