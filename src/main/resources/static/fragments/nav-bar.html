@@ -25,10 +25,10 @@
             <span th:text="${@environment.getProperty('systemType') == 'condominium' ? 'Condomínios' :
                        (@environment.getProperty('systemType') == 'hostel' ? 'Hostels' : 'Repúblicas')}"></span>
         </a>
-        <a th:if="${@environment.getProperty('systemType') == 'condominium'}">
+        <a>
             <span class="material-icons">apartment</span> Apartamentos
         </a>
-        <div th:if="${@environment.getProperty('systemType') == 'condominium'}">
+        <div>
             <a th:href="@{/apartment/}" onclick="removeHashFromUrl()" style="padding-left: 40px;">
                 <span class="material-icons">edit</span> Cadastro
             </a>
