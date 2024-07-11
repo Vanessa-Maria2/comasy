@@ -22,6 +22,7 @@ public class SecurityConfiguration {
     @Autowired
     SecurityFilter securityFilter;
 
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return  httpSecurity
@@ -37,6 +38,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/reception").authenticated()
                         .requestMatchers(HttpMethod.GET, "/resident/**").authenticated()
                         .requestMatchers(HttpMethod.GET, "/suggestion/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/message/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .build();

@@ -1,5 +1,6 @@
 package pds.comasy.patterns.votingsStrategy.messageFactory;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class RepublicMessage implements Message {
@@ -9,13 +10,15 @@ public class RepublicMessage implements Message {
 
     @Override
     public String messageEntrance(Date entryTime) {
-        return "Seu contrato iniciou em "+ entryTime.toString();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        return "O seu contrato iniciou em "+ dateFormat.format(entryTime);
     }
 
     @Override
     public String messageExit(Date entryTime, Date exitTime) {
         this.calculateStatus = calculateStatus(entryTime, exitTime);
-        return "O seu contrato acaba em " + exitTime + " faltam exatemente " + this.calculateStatus + " dias";
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        return "O seu contrato acaba em " + dateFormat.format(exitTime) + " faltam exatemente " + this.calculateStatus + " dias";
     }
 
     @Override
@@ -26,7 +29,8 @@ public class RepublicMessage implements Message {
 
     @Override
     public double calculateStatus(Date entryTime, Date exitTime) {
-        this.calculateStatus = exitTime.getTime() - entryTime.getTime();
-        return calculateStatus/ (1000.0 * 60 * 60);
+        Date dateCurrent = new Date();
+        this.calculateStatus = exitTime.getTime() - dateCurrent.getTime();
+        return calculateStatus/ (1000 * 60 * 60 * 24);
     }
 }
