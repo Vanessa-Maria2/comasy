@@ -21,6 +21,6 @@ public class Condominium extends Place {
     @Column(nullable = false)
     private int qtyApartments;
 
-    @OneToMany(mappedBy = "condominium", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Apartment> apartmentList;
+   /* @OneToMany(mappedBy = "condominium", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Apartment> apartmentList;*/
 }

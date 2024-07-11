@@ -24,7 +24,8 @@ public class Apartment {
     @Column(nullable = false)
     private String residentOwnerCpf;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "condominium_id")
-    private Condominium condominium;
+   /* @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "place_id")
+    private Condominium condominium;*/
+    private Long place_id;
 }

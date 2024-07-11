@@ -1,6 +1,7 @@
 package pds.comasy.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -14,9 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import pds.comasy.dto.ApartmentDto;
+import pds.comasy.dto.CondominiumDto;
 import pds.comasy.exceptions.EntityAlreadyExistsException;
 import pds.comasy.exceptions.InvalidFieldException;
 import pds.comasy.exceptions.NotFoundException;
+import pds.comasy.repository.ApartmentRepository;
+import pds.comasy.repository.HostelRepository;
+import pds.comasy.repository.RepublicRepository;
 import pds.comasy.service.ApartmentService;
 import pds.comasy.service.CondominiumService;
 
@@ -32,12 +37,31 @@ public class ApartmentController {
     @Autowired
     private CondominiumService condominiumService;
 
+    @Autowired
+    private HostelRepository hostelRepository;
+
+    @Autowired
+    private RepublicRepository republicRepository;
+
+    @Value("${systemType}")
+    private String systemType;
+
     @GetMapping("/")
     public ModelAndView index() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("apartment/form");
         modelAndView.addObject("apartment", new ApartmentDto());
         modelAndView.addObject("listCondominium", condominiumService.listCondominium());
+        switch(systemType) {
+            case "condominium":
+                modelAndView.addObject("listCondominium", condominiumService.listCondominium());
+                break;
+                case "hostel":
+                    modelAndView.addObject("listCondominium", hostelRepository.findAll());
+                    break;
+            case "republic":
+                modelAndView.addObject("listCondominium", republicRepository.findAll());
+        }
         return modelAndView;
     }
 

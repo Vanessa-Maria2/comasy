@@ -3,16 +3,18 @@ package pds.comasy.service;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import pds.comasy.dto.ApartmentDto;
-import pds.comasy.entity.Apartment;
-import pds.comasy.entity.Condominium;
+import pds.comasy.entity.*;
 import pds.comasy.exceptions.EntityAlreadyExistsException;
 import pds.comasy.exceptions.InvalidFieldException;
 import pds.comasy.exceptions.NotFoundException;
 import pds.comasy.mapper.ApartmentMapper;
 import pds.comasy.repository.ApartmentRepository;
 import pds.comasy.repository.CondominiumRepository;
+import pds.comasy.repository.HostelRepository;
+import pds.comasy.repository.RepublicRepository;
 
 import java.util.List;
 
@@ -25,14 +27,36 @@ public class ApartmentService {
     @Autowired
     private CondominiumRepository condominiumRepository;
 
+    @Autowired
+    private HostelRepository hostelRepository;
+
+    @Autowired
+    private RepublicRepository republicRepository;
+
+    @Value("${systemType}")
+    private String systemType;
+
     @Transactional
-    public ApartmentDto createdApartment(ApartmentDto apartmentDto, Long condominiumId) throws EntityAlreadyExistsException, InvalidFieldException {
-        Condominium condominium = (condominiumRepository.getById(condominiumId));
-        if(condominium == null) {
-            throw new EntityNotFoundException("Apartment with id " + condominiumId + " not found");
+    public ApartmentDto createdApartment(ApartmentDto apartmentDto, Long placeId) throws EntityAlreadyExistsException, InvalidFieldException {
+       Place place = null;
+
+        switch (systemType) {
+            case "condominium":
+                place = condominiumRepository.findById(placeId).orElseThrow(() ->
+                        new EntityNotFoundException("Condominium with id " + placeId + " not found"));
+                break;
+            case "hostel":
+                place = hostelRepository.findById(placeId).orElseThrow(() ->
+                        new EntityNotFoundException("Hostel with id " + placeId + " not found"));
+                break;
+            case "republic":
+                place = republicRepository.findById(placeId).orElseThrow(() ->
+                        new EntityNotFoundException("Republic with id " + placeId + " not found"));
+                break;
+            default:
         }
 
-        apartmentDto.setCondominium(condominium);
+        apartmentDto.setPlace_id(placeId);
         validarCampos(apartmentDto);
         Apartment apartment = ApartmentMapper.mapToApartment(apartmentDto);
         apartmentRepository.save(apartment);
@@ -78,6 +102,6 @@ public class ApartmentService {
     }
 
     public boolean existsApartment(ApartmentDto apartmentDto) {
-        return apartmentRepository.existsApartment(apartmentDto.getBlock(), apartmentDto.getNumber(), apartmentDto.getCondominium().getId());
+        return apartmentRepository.existsApartment(apartmentDto.getBlock(), apartmentDto.getNumber(), apartmentDto.getPlace_id());
     }
 }

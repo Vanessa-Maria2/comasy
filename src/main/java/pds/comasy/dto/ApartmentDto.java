@@ -18,7 +18,7 @@ public class ApartmentDto {
 
     private String residentOwnerCpf;
 
-    private Condominium condominium;
+    private Long place_id;
 
     public ApartmentDto(){}
 }
