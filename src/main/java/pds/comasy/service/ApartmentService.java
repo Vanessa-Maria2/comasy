@@ -1,15 +1,18 @@
 package pds.comasy.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pds.comasy.dto.ApartmentDto;
 import pds.comasy.entity.Apartment;
+import pds.comasy.entity.Condominium;
 import pds.comasy.exceptions.EntityAlreadyExistsException;
 import pds.comasy.exceptions.InvalidFieldException;
 import pds.comasy.exceptions.NotFoundException;
 import pds.comasy.mapper.ApartmentMapper;
 import pds.comasy.repository.ApartmentRepository;
+import pds.comasy.repository.CondominiumRepository;
 
 import java.util.List;
 
@@ -19,11 +22,21 @@ public class ApartmentService {
     @Autowired
     private ApartmentRepository apartmentRepository;
 
+    @Autowired
+    private CondominiumRepository condominiumRepository;
+
     @Transactional
-    public ApartmentDto createdApartment(ApartmentDto apartmentDto) throws EntityAlreadyExistsException, InvalidFieldException {
+    public ApartmentDto createdApartment(ApartmentDto apartmentDto, Long condominiumId) throws EntityAlreadyExistsException, InvalidFieldException {
+        Condominium condominium = (condominiumRepository.getById(condominiumId));
+        if(condominium == null) {
+            throw new EntityNotFoundException("Apartment with id " + condominiumId + " not found");
+        }
+
+        apartmentDto.setCondominium(condominium);
         validarCampos(apartmentDto);
         Apartment apartment = ApartmentMapper.mapToApartment(apartmentDto);
         apartmentRepository.save(apartment);
+
         return ApartmentMapper.mapToApartmentDto(apartment);
     }
 
