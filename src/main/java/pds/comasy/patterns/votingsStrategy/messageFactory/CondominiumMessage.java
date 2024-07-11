@@ -1,33 +1,24 @@
 package pds.comasy.patterns.votingsStrategy.messageFactory;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CondominiumMessage implements Message {
 
-    Date entryDate, exitDate;
-
-    double calculateStatus;
-
     @Override
     public String messageEntrance(Date entryTime) {
-        return "A entrega chegou no dia " + entryTime.toString() + " na portaria do condomínio";
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        return "O seu contrato iniciou em "+ dateFormat.format(entryTime);
     }
 
     @Override
     public String messageExit(Date entryTime, Date exitTime) {
-        this.calculateStatus = calculateStatus(entryTime, exitTime);
-        return "A entrega foi retirada no dia " + exitTime.toString() + " após " + calculateStatus + " dias na portaria";
-    }
-
-    @Override
-    public void setEntryAndExitDate(Date entryDate, Date exitDate) {
-        this.entryDate = entryDate;
-        this.exitDate = exitDate;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        return "O seu contrato acaba em " + dateFormat.format(exitTime);
     }
 
     @Override
     public double calculateStatus(Date entryTime, Date exitTime) {
-        this.calculateStatus = exitTime.getTime() - entryTime.getTime();
-        return this.calculateStatus/(1000 * 60 * 60 * 24);
+        return 0;
     }
 }

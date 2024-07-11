@@ -7,7 +7,5 @@ public interface Message {
 
     String messageExit(Date entryTime, Date exitTime);
 
-    void setEntryAndExitDate(Date entryDate, Date exitDate);
-
     double calculateStatus(Date entryTime, Date exitTime);
 }
