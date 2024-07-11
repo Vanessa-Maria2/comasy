@@ -20,7 +20,7 @@ public class CondominiumMapper {
         condominium.setNeighborhood(condominiumDto.getNeighborhood());
         condominium.setStreetAddress(condominiumDto.getStreetAddress());
         condominium.setTelephoneNumber(condominiumDto.getTelephoneNumber().replaceAll("[()-]", ""));
-        condominium.setZipCode(condominiumDto.getZipCode().replaceAll("[.-]", ""));
+//        condominium.setZipCode(condominiumDto.getZipCode().replaceAll("[.-]", ""));
 
         List<Apartment> apartmentList = new ArrayList<>();
         if (condominiumDto.getApartmentList() != null) {
@@ -43,7 +43,7 @@ public class CondominiumMapper {
         condominiumDto.setNeighborhood(condominium.getNeighborhood());
         condominiumDto.setStreetAddress(condominium.getStreetAddress());
         condominiumDto.setTelephoneNumber(condominium.getTelephoneNumber().replaceAll("[()-]", ""));
-        condominiumDto.setZipCode(condominium.getZipCode().replaceAll("[.-]", ""));
+//        condominiumDto.setZipCode(condominium.getZipCode().replaceAll("[.-]", ""));
 
        /* if(condominium.getApartmentList() != null) {
             List<ApartmentDto> apartmentDtoList = new ArrayList<>();

@@ -41,6 +41,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/resident/**").authenticated()
                         .requestMatchers(HttpMethod.GET, "/suggestion/**").authenticated()
                         .requestMatchers(HttpMethod.GET, "/message/**").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/place/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .headers(headers -> headers

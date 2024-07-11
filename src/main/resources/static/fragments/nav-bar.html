@@ -23,13 +23,15 @@
         <a th:href="@{/suggestion/list}">
             <span class="material-icons">feedback</span> Sugestões
         </a>
-        <a th:href="@{/condominium/}">
-            <span class="material-icons">business</span> Condomínio
+        <a th:href="@{/place/list}">
+            <span class="material-icons">business</span>
+            <span th:text="${@environment.getProperty('systemType') == 'condominium' ? 'Condomínios' :
+                       (@environment.getProperty('systemType') == 'hostel' ? 'Hostels' : 'Repúblicas')}"></span>
         </a>
-        <a>
+        <a th:if="${@environment.getProperty('systemType') == 'condominium'}">
             <span class="material-icons">apartment</span> Apartamentos
         </a>
-        <div>
+        <div th:if="${@environment.getProperty('systemType') == 'condominium'}">
             <a th:href="@{/apartment/}" onclick="removeHashFromUrl()" style="padding-left: 40px;">
                 <span class="material-icons">edit</span> Cadastro
             </a>
