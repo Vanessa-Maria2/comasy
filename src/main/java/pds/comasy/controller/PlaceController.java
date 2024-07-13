@@ -9,6 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import pds.comasy.dto.PlaceDTO;
 import pds.comasy.entity.Place;
 import pds.comasy.exceptions.InvalidFieldException;
+import pds.comasy.exceptions.NotFoundException;
 import pds.comasy.service.PlaceService;
 
 import java.util.List;
@@ -46,24 +47,13 @@ public class PlaceController {
     @GetMapping("/list")
     public ModelAndView listPlaces() {
         ModelAndView modelAndView = new ModelAndView("place/list");
-        modelAndView.addObject("systemType", systemType);
-        List<? extends Place> places;
-        switch (systemType) {
-            case "condominium":
-                places = placeService.getAllCondominiums();
-                break;
-            case "hostel":
-                places = placeService.getAllHostels();
-                break;
-            case "republic":
-                places = placeService.getAllRepublics();
-                break;
-            default:
-                places = null;
-                modelAndView.addObject("msg", "Tipo de sistema inválido");
-                break;
+        try {
+            List<? extends Place> places = placeService.getAllPlaces();
+            modelAndView.addObject("places", places);
+        } catch (NotFoundException e) {
+            modelAndView.addObject("msg", "Tipo de sistema inválido");
         }
-        modelAndView.addObject("places", places);
+        modelAndView.addObject("systemType", systemType);
         return modelAndView;
     }
 }
